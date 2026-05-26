@@ -1,0 +1,31 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Documentation (project docs, not code)
+docs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Benchmark results (regenerable)
+dual_sig_research/results/*.csv
+dual_sig_research/results/figures/
+
+# Environment
+.env
