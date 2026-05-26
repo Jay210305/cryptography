@@ -51,8 +51,8 @@ flowchart TD
 ### Pasos detallados:
 
 1. **Hash**: se calcula $\text{digest} = \text{SHA3-256}(F)$ — un resumen de 32 bytes del firmware completo.
-2. **Firma clásica**: $\text{sig\_c} = \text{Ed25519.Sign}(sk_c, \text{digest})$ — 64 bytes.
-3. **Firma post-cuántica**: $\text{sig\_q} = \text{ML-DSA-65.Sign}(sk_q, \text{digest})$ — 3,309 bytes. Ambas firmas se calculan sobre el **mismo digest**, manteniendo los esquemas completamente independientes.
+2. **Firma clásica**: $\text{sig}\_\text{c} = \text{Ed25519.Sign}(sk_c, \text{digest})$ — 64 bytes.
+3. **Firma post-cuántica**: $\text{sig}\_\text{q} = \text{ML-DSA-65.Sign}(sk_q, \text{digest})$ — 3,309 bytes. Ambas firmas se calculan sobre el **mismo digest**, manteniendo los esquemas completamente independientes.
 4. **Empaquetado**: el `FirmwareBundle` (firmware + digest + ambas firmas + claves públicas + metadata) se serializa con MessagePack.
 5. **Selección de cifrado**: según el tamaño del payload serializado, se elige ChaCha20-Poly1305 (< 100 KB) o AES-256-GCM (≥ 100 KB).
 6. **KEM híbrido**: se genera un par efímero X25519, se realiza ECDH con la clave pública del receptor, y paralelamente se encapsula con ML-KEM-768 contra la clave KEM pública del receptor. Se obtienen dos shared secrets.
@@ -222,7 +222,7 @@ MessagePack es ideal para este caso: datos binarios pesados (firmas, ciphertexts
 
 El AAD es un componente crítico de seguridad del cifrado AEAD. No se cifra, pero sí se autentica — cualquier modificación del AAD invalida el tag:
 
-$$\text{AAD} = \text{SHA3-256}(\text{eph\_pk}_{x25519} \| \text{mlkem\_ct} \| \text{cipher\_id}.\text{encode}(\texttt{"ascii"}))$$
+$$\text{AAD} = \text{SHA3-256}(\text{eph}\_\text{pk}_{x25519} \| \text{mlkem}\_\text{ct} \| \text{cipher}\_\text{id}.\text{encode}(\texttt{"ascii"}))$$
 
 Esto vincula:
 - La **clave efímera X25519** del emisor.
