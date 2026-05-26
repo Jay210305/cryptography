@@ -222,7 +222,7 @@ MessagePack es ideal para este caso: datos binarios pesados (firmas, ciphertexts
 
 El AAD es un componente crítico de seguridad del cifrado AEAD. No se cifra, pero sí se autentica — cualquier modificación del AAD invalida el tag:
 
-$$\text{AAD} = \text{SHA3-256}(\text{eph}\_\text{pk}_{x25519} \| \text{mlkem}\_\text{ct} \| \text{cipher}\_\text{id}.\text{encode}(\texttt{"ascii"}))$$
+$$\text{AAD} = \text{SHA3-256}(\text{eph\_pk}_{\text{x25519}} \| \text{mlkem\_ct} \| \text{cipher\_id}.\text{encode}(\texttt{"ascii"}))$$
 
 Esto vincula:
 - La **clave efímera X25519** del emisor.
