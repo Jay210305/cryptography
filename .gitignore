@@ -10,9 +10,6 @@ __pycache__/
 dist/
 build/
 
-# Documentation (project docs, not code)
-docs/
-
 # IDE
 .vscode/
 .idea/
