@@ -25,7 +25,7 @@ Esta curva es birracionalmente equivalente a la curva de Montgomery **Curve25519
 
 ### 1.2 Estructura del Grupo
 
-Los puntos racionales de la curva sobre $\mathbb{F}_p$ forman un grupo abeliano bajo la ley de adición de Edwards. El grupo tiene orden $E = 8 $\ell$, donde:
+Los puntos racionales de la curva sobre $\mathbb{F}_p$ forman un grupo abeliano bajo la ley de adición de Edwards. El grupo tiene orden $E = 8\ell$, donde:, donde:
 
 $$\ell = 2^{252} + 27742317777372353535851937790883648493$$
 
