@@ -57,7 +57,7 @@ flowchart TD
 5. **Selección de cifrado**: según el tamaño del payload serializado, se elige ChaCha20-Poly1305 (< 100 KB) o AES-256-GCM (≥ 100 KB).
 6. **KEM híbrido**: se genera un par efímero X25519, se realiza ECDH con la clave pública del receptor, y paralelamente se encapsula con ML-KEM-768 contra la clave KEM pública del receptor. Se obtienen dos shared secrets.
 7. **Derivación**: $K = \text{HKDF-SHA3-256}(ss_{x25519} \| ss_{mlkem}, \text{info}=\texttt{"hybrid-firmware-kem-v1"})$ — clave simétrica de 256 bits.
-8. **AAD**: $\text{AAD} = \text{SHA3-256}(\text{eph\_pk} \| \text{mlkem\_ct} \| \text{cipher\_id})$ — vincula los parámetros KEM al contexto AEAD, previniendo ataques de sustitución.
+8. **AAD**: $\text{AAD} = \text{SHA3-256}(\text{eph}\_\text{pk} \| \text{mlkem}\_\text{ct} \| \text{cipher}\_\text{id})$ — vincula los parámetros KEM al contexto AEAD,
 9. **Cifrado**: AEAD produce nonce (12 bytes aleatorios), ciphertext y tag de autenticación (16 bytes).
 10. **Paquete**: se construye el `SecurePacket` con todos los campos y se serializa con MessagePack para transmisión TCP.
 
