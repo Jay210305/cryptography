@@ -50,7 +50,7 @@ flowchart TD
 
 ### Pasos detallados:
 
-1. **Hash**: se calcula $\text{digest} = \text{SHA3\_256}(F)$ — un resumen de 32 bytes del firmware completo.
+1. **Hash**: se calcula $\text{digest} = \text{SHA3-256}(F)$ — un resumen de 32 bytes del firmware completo.
 2. **Firma clásica**: $\text{sig\_c} = \text{Ed25519.Sign}(sk_c, \text{digest})$ — 64 bytes.
 3. **Firma post-cuántica**: $\text{sig\_q} = \text{ML-DSA-65.Sign}(sk_q, \text{digest})$ — 3,309 bytes. Ambas firmas se calculan sobre el **mismo digest**, manteniendo los esquemas completamente independientes.
 4. **Empaquetado**: el `FirmwareBundle` (firmware + digest + ambas firmas + claves públicas + metadata) se serializa con MessagePack.
