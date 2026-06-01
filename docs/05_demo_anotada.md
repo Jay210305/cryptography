@@ -8,9 +8,76 @@ Este documento recorre un ciclo completo del protocolo explicando **exactamente 
 
 ---
 
-## Cómo Ejecutar la Demo (3 terminales)
+## Demo en 3 laptops (scripts dedicados)
 
-Desde el directorio `dual_sig_research/`, abrir tres terminales y ejecutar en este orden:
+**Guía operativa completa (instalación, red, firewall, fallos):** [09 — Guía demo 3 laptops](09_guia_demo_tres_laptops.md).
+
+Cada rol tiene un script en [`dual_sig_research/demo_nodes/`](../dual_sig_research/demo_nodes/):
+
+| Laptop | Rol | Script | Puerto |
+|--------|-----|--------|--------|
+| B | IoT (receptor) | `node_receiver.py` | escucha **5001** |
+| C | MITM | `node_mitm.py` | escucha **5000**, reenvía a B:5001 |
+| A | Manufacturer (emisor) | `node_sender.py` | conecta a C:5000 |
+
+### Requisitos
+
+- Las tres máquinas en la **misma red** (Wi‑Fi/LAN).
+- **Mismo archivo de claves** en todas: `dual_sig_research/validation_keys.msgpack`.
+- Firewall: permitir TCP **5000** (MITM) y **5001** (receptor).
+- `liboqs` con ML-DSA-65 y ML-KEM-768 instalado en cada laptop.
+
+### Preparación (una vez)
+
+Desde `dual_sig_research/` en cualquier PC:
+
+```powershell
+cd dual_sig_research
+..\venv\Scripts\python.exe demo_nodes\prepare_demo_keys.py
+```
+
+Copiar `validation_keys.msgpack` a la misma ruta en los clones del repo de las otras dos laptops.
+
+### Orden de arranque
+
+Sustituir `<IP_B>` y `<IP_C>` por las IPs LAN reales.
+
+```powershell
+# Laptop B — receptor (primero)
+cd dual_sig_research
+..\venv\Scripts\python.exe demo_nodes\node_receiver.py
+
+# Laptop C — MITM (segundo)
+..\venv\Scripts\python.exe demo_nodes\node_mitm.py --target <IP_B>
+
+# Laptop A — emisor (tercero; dispara el envío)
+..\venv\Scripts\python.exe demo_nodes\node_sender.py --target <IP_C>
+```
+
+Firmware por archivo (opcional):
+
+```powershell
+..\venv\Scripts\python.exe demo_nodes\node_sender.py --target <IP_C> `
+    --firmware firmware_samples\firmware_1kb.bin
+```
+
+Si no existe `firmware_samples/`, generar muestras con `benchmark.generate_firmware_samples()` o escribir un mensaje cuando el emisor lo pida.
+
+### Ataque activo (bit-flip)
+
+En la laptop C, usar `--attack` en lugar del proxy pasivo:
+
+```powershell
+..\venv\Scripts\python.exe demo_nodes\node_mitm.py --target <IP_B> --attack --flip ciphertext
+```
+
+El receptor en B debe terminar con `[ALERT]` y **FIRMWARE REJECTED**.
+
+---
+
+## Cómo Ejecutar la Demo (3 terminales, 1 PC)
+
+Alternativa en un solo equipo con [`network_validation.py`](../dual_sig_research/network_validation.py). Desde el directorio `dual_sig_research/`, abrir tres terminales y ejecutar en este orden:
 
 ```bash
 # Terminal 1 — IoT Device (Receptor)

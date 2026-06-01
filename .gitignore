@@ -26,3 +26,7 @@ dual_sig_research/results/figures/
 
 # Environment
 .env
+
+# Demo key material (private keys; generate with demo_nodes/prepare_demo_keys.py)
+dual_sig_research/validation_keys.msgpack
+dual_sig_research/.validation_keys.msgpack

@@ -255,9 +255,22 @@ Cada paso espera Enter del usuario (modo interactivo) o continúa automáticamen
 
 ---
 
-## 4. `network_validation.py` — Validación de Red
+## 4. Validación de red
 
-### 4.1 Propósito
+### 4.0 `demo_nodes/` — Demo en 3 laptops
+
+Scripts delgados (un rol por máquina) que llaman a `network_validation.py`:
+
+| Script | Rol |
+|--------|-----|
+| `demo_nodes/node_receiver.py` | Receptor IoT (puerto 5001) |
+| `demo_nodes/node_mitm.py` | Proxy MITM (puerto 5000) |
+| `demo_nodes/node_sender.py` | Emisor manufacturer |
+| `demo_nodes/prepare_demo_keys.py` | Genera `validation_keys.msgpack` compartido |
+
+Ver [05 — Demo Anotada](05_demo_anotada.md#demo-en-3-laptops-scripts-dedicados) para el flujo completo en aula.
+
+### 4.1 `network_validation.py` — Propósito
 
 Valida el protocolo en escenarios de red reales, transmitiendo paquetes por TCP entre procesos separados. Cada terminal muestra salida visual con colores, paso a paso, detallando las operaciones criptográficas en tiempo real.
 
@@ -276,7 +289,7 @@ python network_validation.py --scenario local --mode mitm --port 5000 --target-p
 python network_validation.py --scenario local --mode sender --port 5000
 ```
 
-El sender conecta al MITM (puerto 5000), el MITM reenvía al receiver (puerto 5001). Las claves se persisten en `.validation_keys.msgpack` para que los tres procesos usen el mismo material criptográfico.
+El sender conecta al MITM (puerto 5000), el MITM reenvía al receiver (puerto 5001). Las claves se persisten en `validation_keys.msgpack` para que los tres procesos usen el mismo material criptográfico.
 
 #### Entrada de firmware
 
@@ -394,7 +407,7 @@ python network_validation.py --scenario attack --mode attack-mitm \
 - `--firmware`: ruta al archivo de firmware (si se omite, el sender pide input por teclado)
 - `--iface`: interfaz para scapy
 - `--flip`: `ciphertext` o `kem` — qué campo corromper en modo ataque
-- `--keys-file`: ruta alternativa para persistir claves (default: `.validation_keys.msgpack`)
+- `--keys-file`: ruta alternativa para persistir claves (default: `validation_keys.msgpack`)
 - `-v`: modo verbose (debug logging)
 
 ---
@@ -407,10 +420,12 @@ graph TD
     B["benchmark.py\n(benchmarking)"]
     D["demo.py\n(demo interactiva)"]
     N["network_validation.py\n(validación de red)"]
+    DN["demo_nodes/\n(demo 3 laptops)"]
 
     B --> P
     D --> P
     N --> P
+    DN --> N
 ```
 
 Todos los módulos dependen de `protocol.py`. No hay dependencias circulares ni entre los módulos secundarios.

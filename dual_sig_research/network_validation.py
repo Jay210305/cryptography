@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 
 ROOT = Path(__file__).resolve().parent
 FIRMWARE_PATH = ROOT / "firmware_samples" / "firmware_1kb.bin"
-DEFAULT_KEYS_FILE = ROOT / ".validation_keys.msgpack"
+DEFAULT_KEYS_FILE = ROOT / "validation_keys.msgpack"
 FRAME_HDR = struct.Struct("!I")
 
 # ---------------------------------------------------------------------------

@@ -16,6 +16,7 @@ graph TD
     Arch["03 — Arquitectura del Protocolo"]
     Code["04 — Recorrido del Código"]
     Demo["05 — Demo Anotada"]
+    DemoGuide["09 — Guía Demo 3 Laptops"]
     Threats["06 — Modelo de Amenazas"]
     Bench["07 — Análisis de Benchmarks"]
     Limits["08 — Limitaciones y Trabajo Futuro"]
@@ -25,6 +26,7 @@ graph TD
     Index --> Arch
     Index --> Code
     Index --> Demo
+    Index --> DemoGuide
     Index --> Threats
     Index --> Bench
     Index --> Limits
@@ -48,6 +50,7 @@ graph TD
 | 03 | [Arquitectura del Protocolo](03_arquitectura_protocolo.md) | Pipeline Sign-then-Encrypt completo, diagramas de flujo, estructuras de datos, modelo AND de verificación, y selección adaptativa de cifrado. |
 | 04 | [Recorrido del Código](04_recorrido_codigo.md) | Explicación módulo por módulo de `protocol.py`, `benchmark.py`, `demo.py` y `network_validation.py`, con referencias a funciones y líneas. |
 | 05 | [Demo Anotada](05_demo_anotada.md) | Recorrido paso a paso de un ciclo completo del protocolo, explicando qué sucede con los bytes en cada etapa, incluyendo intercepción MITM y caso de fallo. |
+| 09 | [Guía demo 3 laptops](09_guia_demo_tres_laptops.md) | Instalación, claves compartidas, IPs, firewall, orden de arranque y solución de problemas para la demo en aula con `demo_nodes/`. |
 | 06 | [Modelo de Amenazas](06_modelo_amenazas.md) | Escenarios de ataque (clásico, cuántico, combinado, implementación), garantías de seguridad, robustez transicional y propiedades del canal. |
 | 07 | [Análisis de Benchmarks](07_analisis_benchmarks.md) | Resultados experimentales reales: tiempos por fase, overhead criptográfico, throughput, comparación de esquemas e interpretación. |
 | 08 | [Limitaciones y Trabajo Futuro](08_limitaciones_trabajo_futuro.md) | Alcance explícito del proyecto, limitaciones reconocidas, y direcciones de investigación futura. |
@@ -67,6 +70,7 @@ implementation/
 │   ├── 03_arquitectura_protocolo.md
 │   ├── 04_recorrido_codigo.md
 │   ├── 05_demo_anotada.md
+│   ├── 09_guia_demo_tres_laptops.md
 │   ├── 06_modelo_amenazas.md
 │   ├── 07_analisis_benchmarks.md
 │   ├── 08_limitaciones_trabajo_futuro.md
@@ -78,6 +82,7 @@ implementation/
     ├── benchmark.py                   # Suite de benchmarking
     ├── demo.py                        # Demo interactiva
     ├── network_validation.py          # Validación TCP/red
+    ├── demo_nodes/                    # Scripts por rol (demo 3 laptops)
     ├── firmware_samples/              # Blobs binarios de prueba
     └── results/                       # CSVs, JSONs y figuras
 ```
